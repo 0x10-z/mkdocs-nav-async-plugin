@@ -1,6 +1,6 @@
-# MkDocs Navigation Async Plugin
+# MkDocs Navigation Async
 
-**MkDocs Navigation Async Plugin** is an MkDocs plugin designed to extract navigation from one page of your site and load it asynchronously across the other pages. This helps reduce HTML duplication for large sites by keeping navigation in a separate file and injecting it via JavaScript. It also shows a loading spinner until the navigation is fully loaded.
+**MkDocs Navigation Async** is an MkDocs plugin designed to extract navigation from one page of your site and load it asynchronously across the other pages. This helps reduce HTML duplication for large sites by keeping navigation in a separate file and injecting it via JavaScript. It also shows a loading spinner until the navigation is fully loaded.
 
 ## Features
 
@@ -14,7 +14,7 @@
 You can install the plugin via `pip` by adding the following line to your `requirements.txt` or installing it directly:
 
 ```bash
-pip install mkdocs-nav-async-plugin
+pip install mkdocs-nav-async
 ```
 
 Or install it directly from your local development environment using the `-e` option:
