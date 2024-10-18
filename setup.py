@@ -12,7 +12,7 @@ setup(
     packages=find_packages(),
     entry_points={
         'mkdocs.plugins': [
-            'nav_async = plugin:NavAsyncPlugin',
+            'nav_async = plugin:NavAsync',
         ]
     }
 )

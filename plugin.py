@@ -5,7 +5,7 @@ from mkdocs.plugins import BasePlugin
 from bs4 import BeautifulSoup
 from concurrent.futures import ThreadPoolExecutor
 
-class NavAsyncPlugin(BasePlugin):
+class NavAsync(BasePlugin):
 
     def on_post_build(self, config):
         """
