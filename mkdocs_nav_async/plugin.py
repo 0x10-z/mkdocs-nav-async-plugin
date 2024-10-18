@@ -4,6 +4,7 @@ import shutil
 from mkdocs.plugins import BasePlugin
 from bs4 import BeautifulSoup
 from concurrent.futures import ThreadPoolExecutor
+import importlib.resources as pkg_resources
 
 class NavAsync(BasePlugin):
 
@@ -17,11 +18,13 @@ class NavAsync(BasePlugin):
 
         site_dir = config['site_dir']
         nav_file_path = os.path.join(site_dir, 'nav.html')
-        svg_src = os.path.join(os.path.dirname(__file__), 'loading_icons', 'bars-rotate-fade.svg')
-        svg_dest = os.path.join(site_dir, 'bars-rotate-fade.svg')
+        
+        with pkg_resources.path('mkdocs_nav_async.loading_icons', 'bars.svg') as svg_path:
+            svg_src = svg_path
+            svg_dest = os.path.join(site_dir, 'bars-rotate-fade.svg')
 
-        # Copy the spinner SVG file
-        self.copy_spinner_svg(svg_src, svg_dest)
+            # Copy the spinner SVG file
+            self.copy_spinner_svg(svg_src, svg_dest)
 
         # Process the first page to extract navigation
         self.extract_navigation_from_first_page(site_dir, nav_file_path)
