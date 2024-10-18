@@ -38,13 +38,14 @@
 3. **Register an account on PyPI**:
    If you don't already have a PyPI account, register here: [PyPI](https://pypi.org/account/register/)
 
-4. **Install `twine`**:
-   To upload your package, you'll need to use `twine`, a tool that allows you to securely upload packages to PyPI.
+4. **Install `twine` and `wheel`**:
+   To upload your package, you'll need to use `twine` and `wheel`, a tool that allows you to securely upload packages to PyPI and building .whl file.
 
-   Install `twine`:
+   Install both:
 
    ```bash
    pip install twine
+   pip install wheel
    ```
 
 5. **Generate the necessary files for PyPI**:
