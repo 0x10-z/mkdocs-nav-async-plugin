@@ -7,7 +7,7 @@ setup(
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     url="https://github.com/0x10-z/mkdocs-nav-async",
-    author='0x10',
+    author='Iker Ocio (0x10)',
     install_requires=['mkdocs', 'beautifulsoup4'],
     packages=find_packages(),
     entry_points={
