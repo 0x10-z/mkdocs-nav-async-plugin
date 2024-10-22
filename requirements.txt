@@ -1,4 +1,4 @@
 twine
 mkdocs
 --extra-index-url https://test.pypi.org/simple/
-mkdocs-nav-async==0.9
+mkdocs-nav-async==0.10
