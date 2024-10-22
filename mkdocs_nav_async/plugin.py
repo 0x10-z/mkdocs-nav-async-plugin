@@ -2,7 +2,7 @@ import os
 import time
 import shutil
 from mkdocs.plugins import BasePlugin
-import importlib.resources as pkg_resources
+import importlib.resources as resources
 import lxml.html
 import re
 
@@ -21,7 +21,7 @@ class NavAsync(BasePlugin):
         Clears the navigation and inserts a spinner and script for asynchronous navigation loading.
         """
         start_time = time.time()
-        absolute_path = self.config.get('path', "")
+        site_url = config['site_url']
         site_dir = config.get('site_dir', None)
         if site_dir is None:
             raise KeyError("The 'site_dir' key is missing in the configuration.")
@@ -48,7 +48,7 @@ class NavAsync(BasePlugin):
             nav_div[0].clear()
             nav_div[0].set('class', classAttr)
             
-            self.insert_spinner_and_script(nav_div[0], tree, absolute_path)
+            self.insert_spinner_and_script(nav_div[0], tree, site_url)
 
         end_time = time.time()
         print(f"Processed {page.file.src_path} in {end_time - start_time:.2f} seconds")
@@ -59,8 +59,8 @@ class NavAsync(BasePlugin):
 
     def copy_spinner_svg(self, svg_dest):
         """ Copies the spinner SVG file to the generated site. """
-        with pkg_resources.path('mkdocs_nav_async.loading_icons', 'bars.svg') as svg_src:
-            shutil.copy(svg_src, svg_dest)
+        svg_src = resources.files('mkdocs_nav_async.loading_icons').joinpath('bars.svg')
+        shutil.copy(svg_src, svg_dest)
         print(f"Spinner SVG copied to: {svg_dest}")
 
     def save_navigation_to_file(self, nav_element, nav_file_path):
@@ -71,11 +71,11 @@ class NavAsync(BasePlugin):
             nav_file.write(content)
         print(f"Navigation saved to: {nav_file_path}")
 
-    def insert_spinner_and_script(self, nav_element, tree, absolute_path):
+    def insert_spinner_and_script(self, nav_element, tree, site_url):
         """Inserta el spinner y el script de carga asincrónica en la página HTML."""
         # Crear el nodo del spinner
         spinner_div = lxml.html.Element("div", id="loading-spinner", style="display:flex;justify-content:center;align-items:center;height:100px;")
-        spinner_img = lxml.html.Element("img", src=f"/{absolute_path}/bars-rotate-fade.svg", alt="Loading...", style="width:50px;")
+        spinner_img = lxml.html.Element("img", src=f"{site_url}bars-rotate-fade.svg", alt="Loading...", style="width:50px;")
         spinner_div.append(spinner_img)
 
         # Añadir el spinner a la navegación
@@ -89,7 +89,7 @@ class NavAsync(BasePlugin):
             var navContainer = document.querySelector("ul.md-nav__list");
 
             // Use fetch to load the content of nav.html
-            fetch('""" + absolute_path + """/nav.html')
+            fetch('""" + site_url + """nav.html')
                 .then(function(response) {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');

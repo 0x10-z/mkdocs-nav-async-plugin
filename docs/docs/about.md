@@ -2,7 +2,7 @@
 
 ## About the Developer
 
-![myself](/myself.webp){ align=left width=150 }
+![myself](./myself.webp){ align=left width=150 }
 
 Hi, I'm a software developer who is passionate about optimizing workflows and solving real-world problems through code. One day, I found myself working on a massive documentation project for a company with over 4000 HTML files across 13 languages. The project was consuming over **3GB** when zipped, which posed significant challenges for deployment and maintenance.
 
@@ -26,11 +26,7 @@ This improvement was critical for the project’s performance and scalability, p
 
 The **NavAsync** plugin improves performance for large MkDocs projects by deferring the loading of the navigation bar until the page content has loaded. This approach helps reduce the initial load time for pages, especially in large documentation sites with extensive navigation.
 
-!!! tip "Key Features" 
-    - **Asynchronous navigation loading**: Loads the navigation bar asynchronously, allowing the main content to load first.
-    - **Reduces HTML file sizes**: By reusing the navigation, the size of the HTML files decreases significantly, reducing overall bandwidth usage and speeding up deployment times.
-    - **Customizable loading spinner**: You can configure a loading spinner to display while the navigation is loading.
-    - **Scalable for large sites**: Ideal for large documentation projects with thousands of pages and multiple languages.
+!!! tip "Key Features" - **Asynchronous navigation loading**: Loads the navigation bar asynchronously, allowing the main content to load first. - **Reduces HTML file sizes**: By reusing the navigation, the size of the HTML files decreases significantly, reducing overall bandwidth usage and speeding up deployment times. - **Customizable loading spinner**: You can configure a loading spinner to display while the navigation is loading. - **Scalable for large sites**: Ideal for large documentation projects with thousands of pages and multiple languages.
 
 ---
 
@@ -61,10 +57,7 @@ plugins:
 ## Results and Performance Gains
 
 !!! success "Performance Achievements"
-    By using **NavAsync**, I was able to:
-    - Reduce a project with 4000 pages across 13 languages from **3GB to 300MB** when zipped.
-    - Decrease HTML file sizes by **60-70%** across the entire site.
-    - Improve page load times, especially for users with slower connections or for projects hosted on limited bandwidth servers.
+By using **NavAsync**, I was able to: - Reduce a project with 4000 pages across 13 languages from **3GB to 300MB** when zipped. - Decrease HTML file sizes by **60-70%** across the entire site. - Improve page load times, especially for users with slower connections or for projects hosted on limited bandwidth servers.
 
 ---
 

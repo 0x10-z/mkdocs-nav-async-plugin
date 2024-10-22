@@ -1,6 +1,7 @@
 # Project information
 site_name: MKDocs Nav Async
 site_url: https://0x10-z.github.io/mkdocs-nav-async
+#site_url: http://localhost
 site_description: Documentation for the NavAsync plugin using MkDocs Material theme
 site_author: Your Name
 
