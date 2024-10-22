@@ -4,6 +4,7 @@ import shutil
 from mkdocs.plugins import BasePlugin
 import importlib.resources as pkg_resources
 import lxml.html
+import re
 
 class NavAsync(BasePlugin):
 
@@ -20,7 +21,7 @@ class NavAsync(BasePlugin):
         Clears the navigation and inserts a spinner and script for asynchronous navigation loading.
         """
         start_time = time.time()
-        absolute_path = self.config.get('path', "en")
+        absolute_path = self.config.get('path', "")
         site_dir = config.get('site_dir', None)
         if site_dir is None:
             raise KeyError("The 'site_dir' key is missing in the configuration.")
@@ -65,7 +66,9 @@ class NavAsync(BasePlugin):
     def save_navigation_to_file(self, nav_element, nav_file_path):
         """Guarda la navegación en un archivo HTML separado."""
         with open(nav_file_path, 'w', encoding='utf-8') as nav_file:
-            nav_file.write(lxml.html.tostring(nav_element, encoding='unicode'))
+            content = lxml.html.tostring(nav_element, pretty_print=True, encoding='unicode')
+            content = re.sub(r'\n\s*\n+', '\n', content)
+            nav_file.write(content)
         print(f"Navigation saved to: {nav_file_path}")
 
     def insert_spinner_and_script(self, nav_element, tree, absolute_path):
@@ -86,7 +89,7 @@ class NavAsync(BasePlugin):
             var navContainer = document.querySelector("ul.md-nav__list");
 
             // Use fetch to load the content of nav.html
-            fetch('/""" + absolute_path + """/nav.html')
+            fetch('""" + absolute_path + """/nav.html')
                 .then(function(response) {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');

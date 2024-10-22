@@ -1,0 +1,51 @@
+# Project information
+site_name: MKDocs Nav Async
+site_url: http://localhost
+site_description: Documentation for the NavAsync plugin using MkDocs Material theme
+site_author: Your Name
+
+# Site settings
+theme:
+  name: material
+  palette:
+    primary: "indigo"
+    accent: "indigo"
+  font:
+    text: Roboto
+    code: Roboto Mono
+  #logo: images/logo.png # Optional, path to logo
+
+use_directory_urls: false
+
+# Markdown extensions (optional)
+markdown_extensions:
+  - toc:
+      permalink: true
+  - admonition
+  - codehilite
+  - footnotes
+  - meta
+  - attr_list
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+
+# Navigation (example)
+nav:
+  - Home: index.md
+  - About: about.md
+
+# Plugins (optional)
+plugins:
+  "nav_async":
+    "path": ""
+
+# Customization (optional)
+extra_css:
+  - css/custom.css
+
+# extra_javascript:
+#   - js/custom.js
+
+# Paths
+docs_dir: docs # Directory where your markdown files are stored
+site_dir: site # Directory where your static site will be generated
