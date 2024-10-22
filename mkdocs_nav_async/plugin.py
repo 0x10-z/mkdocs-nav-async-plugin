@@ -20,7 +20,7 @@ class NavAsync(BasePlugin):
         Clears the navigation and inserts a spinner and script for asynchronous navigation loading.
         """
         start_time = time.time()
-
+        absolute_path = self.config.get('path', "en")
         site_dir = config.get('site_dir', None)
         if site_dir is None:
             raise KeyError("The 'site_dir' key is missing in the configuration.")
@@ -35,16 +35,19 @@ class NavAsync(BasePlugin):
         # Process the current page to clear navigation and insert spinner
         tree = lxml.html.fromstring(output_content)
 
+        classAttr = "md-nav__list"
         # Encontrar el elemento <ul> con la clase 'md-nav__list' usando XPath
-        nav_div = tree.xpath("//ul[@class='md-nav__list']") # Find the navigation
+        nav_div = tree.xpath(f"//ul[@class='{classAttr}']") # Find the navigation
 
         if nav_div:
             # If it's the first page processed, extract and save the navigation
             if not os.path.exists(nav_file_path):
                 self.save_navigation_to_file(nav_div[0], nav_file_path)  # Use nav_div[0] instead of passing list
 
-            nav_div[0].clear()  # Clear the navigation from the current page
-            self.insert_spinner_and_script(nav_div[0], tree)
+            nav_div[0].clear()
+            nav_div[0].set('class', classAttr)
+            
+            self.insert_spinner_and_script(nav_div[0], tree, absolute_path)
 
         end_time = time.time()
         print(f"Processed {page.file.src_path} in {end_time - start_time:.2f} seconds")
@@ -65,11 +68,11 @@ class NavAsync(BasePlugin):
             nav_file.write(lxml.html.tostring(nav_element, encoding='unicode'))
         print(f"Navigation saved to: {nav_file_path}")
 
-    def insert_spinner_and_script(self, nav_element, tree):
+    def insert_spinner_and_script(self, nav_element, tree, absolute_path):
         """Inserta el spinner y el script de carga asincrónica en la página HTML."""
         # Crear el nodo del spinner
         spinner_div = lxml.html.Element("div", id="loading-spinner", style="display:flex;justify-content:center;align-items:center;height:100px;")
-        spinner_img = lxml.html.Element("img", src="/bars-rotate-fade.svg", alt="Loading...")
+        spinner_img = lxml.html.Element("img", src=f"/{absolute_path}/bars-rotate-fade.svg", alt="Loading...", style="width:50px;")
         spinner_div.append(spinner_img)
 
         # Añadir el spinner a la navegación
@@ -83,7 +86,7 @@ class NavAsync(BasePlugin):
             var navContainer = document.querySelector("ul.md-nav__list");
 
             // Use fetch to load the content of nav.html
-            fetch('/nav.html')
+            fetch('/""" + absolute_path + """/nav.html')
                 .then(function(response) {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
