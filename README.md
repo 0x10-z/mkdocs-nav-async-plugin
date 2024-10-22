@@ -97,6 +97,13 @@ Total execution time: 1.35 seconds
 - **Spinner Icon**: The default spinner icon is an SVG file (`bars-rotate-fade.svg`). You can replace this with your own by modifying the plugin or adding your own spinner.
 - **Asynchronous Loading**: The plugin uses `fetch` to load the navigation dynamically. You can customize the JavaScript if needed by modifying the `insert_spinner_and_script` function.
 
+## Performance Statistics
+
+- With this plugin using `BeautifulSoup4`, it processes each page in 0.8 seconds. In a 4000 files project, 53min.
+- With this plugin using `lxml`, it processes each page in 0.08 seconds. In a 4000 files project, 5min.
+- Using this plugin with `on_post_page` in a project with over 4000 files adds an additional 6 minutes to the build time compared to not using the plugin.
+- Using this plugin with `on_post_build` in a project with over 4000 files also adds an additional 6 minutes to the build time compared to not using the plugin.
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
