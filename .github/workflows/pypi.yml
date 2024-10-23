@@ -60,6 +60,6 @@ jobs:
           path: .cache
           restore-keys: |
             mkdocs-material-
-
+      - run: echo "Going to sleep for 10 seconds..." && sleep 10
       - run: pip install -r requirements.txt
       - run: cd docs && mkdocs gh-deploy --force
