@@ -1,13 +1,16 @@
-import os
-import time
-import shutil
 import importlib.resources as resources
+import os
 import random
-import string
-import lxml.html
 import re
-from mkdocs.plugins import BasePlugin
+import shutil
+import string
+import time
+
+import htmlmin
+import lxml.html
+
 from mkdocs.config.config_options import Type
+from mkdocs.plugins import BasePlugin
 
 class NavAsync(BasePlugin):
     minify = "minify"
@@ -81,7 +84,7 @@ class NavAsync(BasePlugin):
         if prettify:
             modified_html = re.sub(r'\n\s*\n+', '\n', modified_html)
         if minify:
-            modified_html = modified_html.replace(' ','')
+            modified_html = htmlmin.minify(modified_html, remove_empty_space=True)
         return modified_html
 
     def copy_spinner_svg(self, svg_dest):
@@ -116,7 +119,7 @@ class NavAsync(BasePlugin):
             if prettify:
                 content = re.sub(r'\n\s*\n+', '\n', content)
             if minify:
-                content = content.replace(' ','')
+                content = htmlmin.minify(content, remove_empty_space=True)
             nav_file.write(content)
         print(f"Navigation children saved to: {nav_file_path}")
 
