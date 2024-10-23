@@ -32,12 +32,12 @@ plugins:
   - nav_async
 ```
 
-You can also specify options like language:
+You can also specify options like prettify, in order to prettify output html:
 
 ```yaml
 plugins:
   - nav_async:
-      language: "en"
+      prettify: true
 ```
 
 ## How it Works
@@ -53,7 +53,7 @@ theme:
 
 plugins:
   - nav_async:
-      language: "en" # Optional, specify the language for your site
+      prettify: true # Optional, specify output html prettified
 
 extra_css:
   - css/custom.css # Optional, if you want to customize the spinner or styling

@@ -38,7 +38,7 @@ nav:
 # Plugins (optional)
 plugins:
   "nav_async":
-    "path": ""
+    "prettify": True
 
 # Customization (optional)
 extra_css:

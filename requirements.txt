@@ -2,4 +2,4 @@ twine
 mkdocs
 mkdocs-material
 --extra-index-url https://test.pypi.org/simple/
-mkdocs-nav-async==0.12
+mkdocs-nav-async==0.13

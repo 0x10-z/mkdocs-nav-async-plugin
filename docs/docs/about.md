@@ -49,7 +49,7 @@ Add the plugin to your `mkdocs.yml` configuration:
 ```yaml
 plugins:
   - nav_async:
-      path: ""
+      prettify: true
 ```
 
 ---
