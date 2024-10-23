@@ -7,11 +7,11 @@ on:
       - main
 
 jobs:
-  publish-to-pypi:
+  publish-to-testpypi:
     runs-on: ubuntu-latest
     environment:
-      name: release
-      url: https://pypi.org/project/mkdocs-nav-async/
+      name: test
+      url: https://test.pypi.org/project/mkdocs-nav-async/
     permissions:
       id-token: write
     steps:
@@ -32,12 +32,14 @@ jobs:
         run: |
           python setup.py sdist bdist_wheel
 
-      - name: Publish distribution 📦 to PyPI
+      - name: Publish distribution 📦 to TestPyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://upload.pypi.org/legacy/ # Uncomment this to enable PyPI deployment
 
   deploy_docs:
     runs-on: ubuntu-latest
-    needs: publish-to-pypi
+    needs: publish-to-testpypi # Espera a que el trabajo de TestPyPI finalice
     permissions:
       contents: write
     steps:
