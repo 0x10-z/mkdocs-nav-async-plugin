@@ -38,6 +38,7 @@ You can also specify options like prettify, in order to prettify output html:
 plugins:
   - nav_async:
       prettify: true
+      minify: true
 ```
 
 ## How it Works
@@ -54,6 +55,7 @@ theme:
 plugins:
   - nav_async:
       prettify: true # Optional, specify output html prettified
+      minify: true # Optional, minify html output
 
 extra_css:
   - css/custom.css # Optional, if you want to customize the spinner or styling

@@ -50,6 +50,7 @@ Add the plugin to your `mkdocs.yml` configuration:
 plugins:
   - nav_async:
       prettify: true
+      minify: true
 ```
 
 ---

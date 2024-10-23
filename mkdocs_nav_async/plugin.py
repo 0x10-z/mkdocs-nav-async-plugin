@@ -10,26 +10,27 @@ from mkdocs.plugins import BasePlugin
 from mkdocs.config.config_options import Type
 
 class NavAsync(BasePlugin):
+    minify = "minify"
+    prettify = "prettify"
     config_scheme = (
-        ('prettify', Type(bool, default=False)),
+        (prettify, Type(bool, default=False)),
+        (minify, Type(bool, default=False)),
     )
 
     def on_config(self, config):
         """
         Configures the plugin based on the provided configuration.
 
-        This method retrieves the 'prettify' option from the plugin's configuration
-        and prints a message indicating whether prettification of the HTML content
-        is enabled or disabled.
+        This method retrieves the 'prettify' and 'minify' options from the plugin's configuration
+        and prints a message indicating whether each option is enabled or disabled.
 
         Args:
             config (dict): The configuration dictionary with settings for the plugin.
         """
-        prettify = self.config.get('prettify', False)
-        if prettify:
-            print("Prettify is enabled")
-        else:
-            print("Prettify is disabled")
+        for option in [self.prettify, self.minify]:
+            is_enabled = self.config.get(option, False)
+            status = "enabled" if is_enabled else "disabled"
+            print(f"{option.capitalize()} is {status}")
 
     def on_startup(self, command, dirty):
         """
@@ -48,6 +49,7 @@ class NavAsync(BasePlugin):
         site_url = config['site_url']
         site_dir = config.get('site_dir', None)
         prettify = self.config.get('prettify', False)
+        minify = self.config.get('minify', False)
         if site_dir is None:
             raise KeyError("The 'site_dir' key is missing in the configuration.")
 
@@ -64,7 +66,7 @@ class NavAsync(BasePlugin):
 
         if nav_div:
             if not os.path.exists(nav_file_path):
-                self.save_navigation_to_file(nav_div[0], nav_file_path, prettify)
+                self.save_navigation_to_file(nav_div[0], nav_file_path, prettify, minify)
 
             nav_div[0].clear()
             nav_div[0].set('class', classAttr)
@@ -78,6 +80,8 @@ class NavAsync(BasePlugin):
         modified_html = lxml.html.tostring(tree, pretty_print=prettify, encoding='unicode')
         if prettify:
             modified_html = re.sub(r'\n\s*\n+', '\n', modified_html)
+        if minify:
+            modified_html = modified_html.replace(' ','')
         return modified_html
 
     def copy_spinner_svg(self, svg_dest):
@@ -94,22 +98,25 @@ class NavAsync(BasePlugin):
         shutil.copy(svg_src, svg_dest)
         print(f"Spinner SVG copied to: {svg_dest}")
 
-    def save_navigation_to_file(self, nav_element, nav_file_path, prettify):
+    def save_navigation_to_file(self, nav_element, nav_file_path, prettify, minify):
         """
-        Saves the child elements of the navigation to a separate HTML file.
-
-        This function writes the serialized HTML content of the child elements within the provided navigation element
-        to a specified file path. The content can be prettified for readability by setting the `prettify` parameter.
-        Consecutive newline characters are reduced to a single newline for a cleaner output.
+        Saves the navigation children to a file.
 
         Args:
-            nav_element: The navigation element whose child content is to be saved.
-            nav_file_path: The file path where the navigation content will be saved.
-            prettify: Boolean flag indicating whether the HTML content should be prettified.
+            nav_element (lxml.etree._Element): The root navigation element.
+            nav_file_path (str): The path where the navigation children will be saved.
+            prettify (bool): If True, the saved HTML will be prettified with newlines and indentation.
+            minify (bool): If True, the saved HTML will be minified by removing all whitespace.
+
+        Returns:
+            None
         """
         with open(nav_file_path, 'w', encoding='utf-8') as nav_file:
             content = ''.join([lxml.html.tostring(child, pretty_print=prettify, encoding='unicode') for child in nav_element])
-            content = re.sub(r'\n\s*\n+', '\n', content)
+            if prettify:
+                content = re.sub(r'\n\s*\n+', '\n', content)
+            if minify:
+                content = content.replace(' ','')
             nav_file.write(content)
         print(f"Navigation children saved to: {nav_file_path}")
 

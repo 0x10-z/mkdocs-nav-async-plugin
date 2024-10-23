@@ -39,6 +39,7 @@ nav:
 plugins:
   "nav_async":
     "prettify": True
+    "minify": True
 
 # Customization (optional)
 extra_css:

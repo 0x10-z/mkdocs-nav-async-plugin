@@ -40,10 +40,9 @@ Add the following configuration to your `mkdocs.yml` file:
 
 ```yaml
 plugins:
-  - search # Optional, built-in search plugin
-  - nav_async: # NavAsync plugin
-      custom_option: true
-      spinner_path: "assets/spinner.svg"
+  - nav_async:
+      prettify: true
+      minify: true
 ```
 
 ### Step 4: Run MkDocs
@@ -74,20 +73,20 @@ For large projects with extensive navigation, you can reduce the size of your HT
 
 The `NavAsync` plugin comes with a few configuration options that can be customized in your `mkdocs.yml` file:
 
-- **`custom_option`**: Enables or disables the plugin's custom behavior.
+- **`prettify`**: Prettify output html.
   - Type: `bool`
   - Default: `false`
-- **`spinner_path`**: Specifies the path to the loading spinner SVG.
-  - Type: `str`
-  - Default: `assets/spinner.svg`
+- **`minify`**: Minify output html.
+  - Type: `bool`
+  - Default: `false`
 
 ### Example Configuration
 
 ```yaml
 plugins:
   - nav_async:
-      custom_option: true
-      spinner_path: "assets/spinner.svg"
+      prettify: true
+      minify: true
 ```
 
 ---
@@ -112,8 +111,8 @@ To see the `NavAsync` plugin in action, you can try the following example:
 ```yaml
 plugins:
   - nav_async:
-      custom_option: true
-      spinner_path: "assets/spinner.svg"
+      prettify: true
+      minify: true
 ```
 
 This configuration will asynchronously load the navigation with a custom spinner icon.
