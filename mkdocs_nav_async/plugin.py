@@ -47,6 +47,7 @@ class NavAsync(BasePlugin):
 
             nav_div[0].clear()
             nav_div[0].set('class', classAttr)
+            nav_div[0].set('data-md-scrollfix')
             
             self.insert_spinner_and_script(nav_div[0], tree, site_url)
 
@@ -55,6 +56,7 @@ class NavAsync(BasePlugin):
 
         # Return the modified content for this page
         modified_html = lxml.html.tostring(tree, pretty_print=True, encoding='unicode')
+        modified_html = re.sub(r'\n\s*\n+', '\n', modified_html) # CHECK PERFORMANCE
         return modified_html
 
     def copy_spinner_svg(self, svg_dest):
@@ -64,12 +66,13 @@ class NavAsync(BasePlugin):
         print(f"Spinner SVG copied to: {svg_dest}")
 
     def save_navigation_to_file(self, nav_element, nav_file_path):
-        """Guarda la navegación en un archivo HTML separado."""
+        """Guarda solo el contenido hijo de la navegación en un archivo HTML separado."""
         with open(nav_file_path, 'w', encoding='utf-8') as nav_file:
-            content = lxml.html.tostring(nav_element, pretty_print=True, encoding='unicode')
+            content = ''.join([lxml.html.tostring(child, pretty_print=True, encoding='unicode') for child in nav_element])
             content = re.sub(r'\n\s*\n+', '\n', content)
             nav_file.write(content)
-        print(f"Navigation saved to: {nav_file_path}")
+        print(f"Navigation children saved to: {nav_file_path}")
+
 
     def insert_spinner_and_script(self, nav_element, tree, site_url):
         """Inserta el spinner y el script de carga asincrónica en la página HTML."""
