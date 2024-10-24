@@ -19,6 +19,7 @@ class NavAsync(BasePlugin):
         (prettify, Type(bool, default=False)),
         (minify, Type(bool, default=False)),
     )
+    nav_filename = "@nav.html"
 
     def on_config(self, config):
         """
@@ -40,14 +41,13 @@ class NavAsync(BasePlugin):
         Copy the spinner SVG file only once at the beginning of the build process.
         This method does not have access to 'config', so we won't use it here.
         """
-        pass
+        self.nav_filename = f"nav_{''.join(random.choices(string.ascii_letters + string.digits, k=5))}.html"
 
     def on_post_page(self, output_content, page, config):
         """
         Processes each page after it is built.
         Clears the navigation and inserts a spinner and script for asynchronous navigation loading.
         """
-        random_nav_name = f"nav_{''.join(random.choices(string.ascii_letters + string.digits, k=5))}.html"
         start_time = time.time()
         site_url = config['site_url']
         site_dir = config.get('site_dir', None)
@@ -56,7 +56,7 @@ class NavAsync(BasePlugin):
         if site_dir is None:
             raise KeyError("The 'site_dir' key is missing in the configuration.")
 
-        nav_file_path = os.path.join(site_dir, random_nav_name)
+        nav_file_path = os.path.join(site_dir, self.nav_filename)
 
         svg_dest = os.path.join(site_dir, 'bars-rotate-fade.svg')
         if not os.path.exists(svg_dest):
@@ -75,7 +75,7 @@ class NavAsync(BasePlugin):
             nav_div[0].set('class', classAttr)
             nav_div[0].set('data-md-scrollfix')
             
-            self.insert_spinner_and_script(nav_div[0], tree, site_url, random_nav_name)
+            self.insert_spinner_and_script(nav_div[0], tree, site_url, self.nav_filename)
 
         end_time = time.time()
         print(f"Processed {page.file.src_path} in {end_time - start_time:.2f} seconds")
