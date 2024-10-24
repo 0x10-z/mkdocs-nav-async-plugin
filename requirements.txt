@@ -2,4 +2,4 @@ twine
 htmlmin
 mkdocs
 mkdocs-material
-mkdocs-nav-async==0.15
+mkdocs-nav-async==0.17
