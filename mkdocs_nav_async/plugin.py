@@ -20,7 +20,7 @@ class NavAsync(BasePlugin):
     config_scheme = (
         (prettify, Type(bool, default=False)),
         (minify, Type(bool, default=False)),
-        (path, Type(str, default="/")),
+        (path, Type(str, default="")),
     )
     nav_filename = "@nav.html"
 
@@ -57,7 +57,7 @@ class NavAsync(BasePlugin):
         site_dir = config.get('site_dir', None)
         prettify = self.config.get('prettify', False)
         minify = self.config.get('minify', False)
-        nav_path = self.config.get(self.path, "/")
+        nav_path = self.config.get(self.path)
         if site_dir is None:
             raise KeyError("The 'site_dir' key is missing in the configuration.")
 
