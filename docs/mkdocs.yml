@@ -40,6 +40,7 @@ plugins:
   "nav_async":
     "prettify": True
     "minify": True
+    "path": "mkdocs-nav-async"
 
 # Customization (optional)
 extra_css:

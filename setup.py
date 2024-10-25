@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='mkdocs-nav-async',
-    version='0.17',
+    version='0.18',
     description='MkDocs plugin to extract navigation and load it asynchronously',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
